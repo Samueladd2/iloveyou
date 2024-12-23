@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Love Page</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #fdf6e3;
+        }
+        h1 {
+            color: #2a9d8f;
+        }
+        .buttons {
+            margin-top: 20px;
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 300px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 5px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            position: absolute;
+        }
+        #loveButton {
+            background-color: #2a9d8f;
+            color: white;
+            position: static;
+        }
+        #dontLoveButton {
+            background-color: #e76f51;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>I Love You</h1>
+    <div class="buttons">
+        <button id="loveButton">I Love You</button>
+        <button id="dontLoveButton">I Don't Love You</button>
+    </div>
+    <script>
+        const dontLoveButton = document.getElementById('dontLoveButton');
+        const loveButton = document.getElementById('loveButton');
+        const container = document.querySelector('.buttons');
+        let timer;
+
+        // Move "I Don't Love You" button within a margin of 300px
+        dontLoveButton.addEventListener('mouseover', moveButton);
+        dontLoveButton.addEventListener('click', moveButton);
+
+        function moveButton() {
+            const containerWidth = container.offsetWidth;
+            const containerHeight = container.offsetHeight;
+            const currentLeft = dontLoveButton.offsetLeft;
+            const currentTop = dontLoveButton.offsetTop;
+
+            const directions = ['left', 'right', 'up', 'down'];
+            const direction = directions[Math.floor(Math.random() * directions.length)];
+
+            let newLeft = currentLeft;
+            let newTop = currentTop;
+
+            if (direction === 'left') {
+                newLeft = Math.max(0, currentLeft - 300);
+            } else if (direction === 'right') {
+                newLeft = Math.min(containerWidth - dontLoveButton.offsetWidth, currentLeft + 300);
+            } else if (direction === 'up') {
+                newTop = Math.max(0, currentTop - 300);
+            } else if (direction === 'down') {
+                newTop = Math.min(containerHeight - dontLoveButton.offsetHeight, currentTop + 300);
+            }
+
+            dontLoveButton.style.left = `${newLeft}px`;
+            dontLoveButton.style.top = `${newTop}px`;
+        }
+
+        // Handle "I Love You" button click
+        loveButton.addEventListener('click', () => {
+            alert('I love you too! ❤️');
+        });
+
+        // Wait 10 seconds for no interaction
+        dontLoveButton.addEventListener('mouseover', resetTimer);
+        loveButton.addEventListener('mouseover', resetTimer);
+
+        function resetTimer() {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                alert('Okay, no cheating. Samuel is fair!');
+            }, 10000);
+        }
+
+        resetTimer();
+    </script>
+</body>
+</html>
